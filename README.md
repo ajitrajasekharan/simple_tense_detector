@@ -1,5 +1,5 @@
 # simple_tense_detector
-This is a simple present/past tense detector of a sentence using DEP-POS tagger
+This is a simple present/past tense detector of a sentence using DEP-POS tagger. **This detector assumes Penn tree bank POS tags https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html**
 
 # Installation.
 
