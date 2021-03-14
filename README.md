@@ -13,3 +13,6 @@ Step 1 requires python 2.7
 2) python tense_detector.py test.txt
 
 Step 2 requires python 3+
+
+# License
+MIT License
