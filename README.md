@@ -3,21 +3,14 @@ This is a simple present/past tense detector of a sentence using DEP-POS tagger
 
 # Installation.
 
-1) Install the POS server as per instructions in the URL below and test the server first
+**Step 1)** Install the POS server as per instructions in the URL below and test the server first
 https://github.com/ajitrajasekharan/JPTDP_wrapper.git
 
-After this step a server should be running on port 8028. The step below expects that. If running the server on  a different port, change the port in the  File: tense_detector.py
+After this step a server should be running on port 8028. The step below expects that. If running the server on  a different port, specify a different port to the command open in step 2 below. *python tense_detector.py --help for the options*
 
-Step 1 requires python 2.7
+*Step 1 requires python 2.7*
 
-2) python tense_detector.py test.txt
-
-Step 2 requires python 3+
-
-# Test install
-
-
-*python tense_detector.py*
+**Step 2)** python tense_detector.py
 
 ```
 VERB DEPTH SCORE[0-1]|tense type - undecided,present,past|confidence [0-1]|sentence
@@ -30,6 +23,10 @@ VERB DEPTH SCORE[0-1]|tense type - undecided,present,past|confidence [0-1]|sente
 1|present|0.67|He plans to finish his school sometime in the distant future
 1|present|1.0|Patient history includes asthma and peanut allergy
 ```
+
+*Step 2 requires python 3+*
+
+
 
 # License
 MIT License
