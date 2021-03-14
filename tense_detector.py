@@ -2,11 +2,13 @@ import sys
 import pdb
 import requests
 from collections import OrderedDict
+import argparse
 import urllib
 
 
 
-URL="http://127.0.0.1:8028/"
+DEFAULT_URL="http://127.0.0.1:8028/"
+DEFAULT_INPUT="test.txt"
 
 TT_UNDECIDED = 0
 TT_PAST = 1
@@ -33,8 +35,8 @@ POS_INDEX = 2
 DEP_INDEX = 3
 
 
-def fetch(sent):
-    r = requests.get(URL+urllib.parse.quote(str(sent)))
+def fetch(sent,pos_dep_url):
+    r = requests.get(pos_dep_url+urllib.parse.quote(str(sent)))
     return r 
 
 
@@ -84,13 +86,13 @@ def classify_sentence(line,sorted_d):
     #print(sorted_d)
     print(str(round(score,2))+'|'+tense_strs[sent_type]+'|'+str(round(confidence,2))+'|'+line)
 
-def process_file(inp_file):
+def process_file(inp_file,pos_dep_url):
     with open(inp_file) as fp:
         print("VERB DEPTH SCORE[0-1]|tense type - undecided,present,past|confidence [0-1]|sentence")
         for line in fp:
             #print(line,end='')
             line = line.rstrip('\n')
-            results = fetch(line)
+            results = fetch(line,pos_dep_url)
             data = results.text.split('\n')
             verb_dict = {}
             for frag in data:
@@ -111,10 +113,11 @@ def process_file(inp_file):
 
 
 def main():
-    if (len(sys.argv) < 2):
-        print("Input file name with sentences")
-    else:
-        process_file(sys.argv[1])
+    parser = argparse.ArgumentParser(description='Simple tense detection using a DEP/POS tagger ',formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('-input', action="store", dest="input", default=DEFAULT_INPUT,help='Input to file containing sentences.')
+    parser.add_argument('-url', action="store", dest="url", default=DEFAULT_URL,help='URL to POS/DEP server with port info. Default works with JPTDP server running on same machine')
+    results = parser.parse_args()
+    process_file(results.input,results.url)
     
 
 
