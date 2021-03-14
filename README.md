@@ -14,5 +14,22 @@ Step 1 requires python 2.7
 
 Step 2 requires python 3+
 
+# Test install
+
+
+*python tense_detector.py test.txt*
+
+```
+VERB DEPTH SCORE[0-1]|tense type - undecided,present,past|confidence [0-1]|sentence
+1|past|1.0|He fell down and broke his leg
+1|past|1.0|Her hypophysitis secondary to ipilimumab was well managed with supplemental hormones
+1|past|0.57|She imagined herself going into the future and baking a cake
+1|past|0.9|He fell down and bled to death near the park where children were playing and having fun with their parents
+1|past|0.47|Before going to the school he decided to examine the landscape
+1|undecided|1.0|He will try to fly his kite again tomorrow
+1|present|0.67|He plans to finish his school sometime in the distant future
+1|present|1.0|Patient history includes asthma and peanut allergy
+```
+
 # License
 MIT License
