@@ -17,7 +17,7 @@ Step 2 requires python 3+
 # Test install
 
 
-*python tense_detector.py test.txt*
+*python tense_detector.py*
 
 ```
 VERB DEPTH SCORE[0-1]|tense type - undecided,present,past|confidence [0-1]|sentence
