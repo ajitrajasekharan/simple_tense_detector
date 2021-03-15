@@ -24,6 +24,7 @@ VERB DEPTH SCORE[0-1]|tense type - undecided,present,past,future|confidence [0-1
 1|future|0.2|He will try to fly his kite again tomorrow
 1|present|0.67|He plans to finish his school sometime in the distant future
 1|present|1.0|Patient history includes asthma and peanut allergy
+1|future|0.2|He could finish his homework if he only tried
 ```
 
 *Step 2 requires python 3+*
