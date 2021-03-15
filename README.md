@@ -14,7 +14,7 @@ After this step a server should be running on port 8028. The step below expects 
 **Step 2)** python tense_detector.py
 
 ```
-VERB DEPTH SCORE[0-1]|tense type - undecided,present,past,future|confidence [0-1]|sentence
+VERB DEPTH SCORE[0-1]|tense type - undecided,present,past,future, no verb|confidence [0-1]|sentence
 1|future|0.18|We will repeat a stress test on him next spring to make sure he has not had progression of disease in his other arteries.
 1|past|1.0|He fell down and broke his leg
 1|past|1.0|Her hypophysitis secondary to ipilimumab was well managed with supplemental hormones
