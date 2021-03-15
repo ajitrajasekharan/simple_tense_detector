@@ -101,7 +101,7 @@ def classify_sentence(line,sorted_d):
 
 def process_file(inp_file,pos_dep_url):
     with open(inp_file) as fp:
-        print("VERB DEPTH SCORE[0-1]|tense type - undecided,present,past,future|confidence [0-1]|sentence")
+        print("VERB DEPTH SCORE[0-1]|tense type - undecided,present,past,future,no verb|confidence [0-1]|sentence")
         for line in fp:
             #print(line,end='')
             line = line.rstrip('\n')
