@@ -14,10 +14,12 @@ TT_UNDECIDED = 0
 TT_PAST = 1
 TT_PRESENT = 2
 TT_NO_VERB = 3
+TT_FUTURE = 4
 tense_strs = {TT_UNDECIDED:"undecided",
                TT_PAST:"past",
                TT_PRESENT:"present",
                TT_NO_VERB:"no verb: likely present",
+               TT_FUTURE:"future"
 }
 
 
@@ -27,7 +29,8 @@ tense_tags = {
     "VBG":TT_PRESENT,
     "VBN":TT_PAST,
     "VBP":TT_PRESENT,
-    "VBZ":TT_PRESENT}
+    "VBZ":TT_PRESENT,
+    "MD":TT_FUTURE}
 
 ORD_INDEX = 0
 WORD_INDEX = 1
@@ -42,7 +45,7 @@ def fetch(sent,pos_dep_url):
 
 
 def classify_sentence(line,sorted_d):
-    confidence_arr = [0,0,0] 
+    confidence_arr = [0]*len(tense_strs)
     score = 0
     for choice in sorted_d:
         vals = sorted_d[choice]
@@ -55,23 +58,33 @@ def classify_sentence(line,sorted_d):
     max_index = 0
     index = 0
     sum_val = 0
+    curr_type = TT_UNDECIDED
     for choice in sorted_d:
         vals = sorted_d[choice]
         tmp_score = 1 if vals["dep"] == 0 else 1.0/vals["dep"]
         if (tense_tags[vals["pos"]] == TT_UNDECIDED):
             confidence_arr[TT_UNDECIDED] += tmp_score 
-            if (confidence_arr[TT_UNDECIDED] > max_val):
+            if (max_val == 0):
                 max_val = confidence_arr[TT_UNDECIDED]
+                curr_type = TT_UNDECIDED
                 max_choice = choice
         elif (tense_tags[vals["pos"]] == TT_PAST):
             confidence_arr[TT_PAST] += tmp_score
-            if (confidence_arr[TT_PAST] > max_val):
+            if (confidence_arr[TT_PAST] > max_val or curr_type == TT_UNDECIDED):
                 max_val = confidence_arr[TT_PAST]
+                curr_type = TT_PAST
+                max_choice = choice
+        elif (tense_tags[vals["pos"]] == TT_FUTURE):
+            confidence_arr[TT_FUTURE] += tmp_score
+            if (confidence_arr[TT_FUTURE] > max_val or curr_type == TT_UNDECIDED):
+                max_val = confidence_arr[TT_FUTURE]
+                curr_type = TT_FUTURE
                 max_choice = choice
         else:
             confidence_arr[TT_PRESENT] += tmp_score
-            if (confidence_arr[TT_PRESENT] > max_val):
+            if (confidence_arr[TT_PRESENT] > max_val or curr_type == TT_UNDECIDED):
                 max_val = confidence_arr[TT_PRESENT]
+                curr_type = TT_PRESENT
                 max_choice = choice
         sum_val += tmp_score
         index += 1
@@ -88,7 +101,7 @@ def classify_sentence(line,sorted_d):
 
 def process_file(inp_file,pos_dep_url):
     with open(inp_file) as fp:
-        print("VERB DEPTH SCORE[0-1]|tense type - undecided,present,past|confidence [0-1]|sentence")
+        print("VERB DEPTH SCORE[0-1]|tense type - undecided,present,past,future|confidence [0-1]|sentence")
         for line in fp:
             #print(line,end='')
             line = line.rstrip('\n')
